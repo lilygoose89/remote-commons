@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Index — Remote Commons" creditPlumia datasetJsonLd>
+  <h1>Index</h1>
+  <p>
+    <a href="/api/v1/countries">/api/v1/countries</a>
+    · <a href="/api/v1/countries.csv">/api/v1/countries.csv</a>
+  </p>
+  <p>
+    <a href="/api/v1/visas">/api/v1/visas</a>
+    · <a href="/api/v1/visas.csv">/api/v1/visas.csv</a>
+  </p>
+  <div data-index>
+    <section data-policymaker>
+      <h2>Policymaker view</h2>
+    </section>
+    <section data-nomad>
+      <h2>Nomad view</h2>
+    </section>
+  </div>
+</Base>
+<script>
+  import { mountIndex } from "../scripts/index-page";
+  mountIndex(document);
+</script>

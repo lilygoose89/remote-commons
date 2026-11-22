@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Contribute — Remote Commons">
+  <h1>Contribute</h1>
+  <p>DRAFT: copy pending approval. Submissions are stored as pending and are not published.</p>
+  <form id="contribution" method="post" action="/api/v1/contributions">
+    <label>
+      Kind
+      <select name="kind" required>
+        <option value="correction">correction</option>
+        <option value="new_visa">new_visa</option>
+        <option value="source">source</option>
+        <option value="other">other</option>
+      </select>
+    </label>
+    <label>
+      Target entity
+      <select name="target_entity">
+        <option value=""></option>
+        <option value="countries">countries</option>
+        <option value="country_metrics">country_metrics</option>
+        <option value="visas">visas</option>
+        <option value="sources">sources</option>
+        <option value="methods">methods</option>
+        <option value="scores">scores</option>
+      </select>
+    </label>
+    <label>
+      Target id
+      <input name="target_id" type="text" maxlength="80" />
+    </label>
+    <label>
+      Body
+      <textarea name="body" required maxlength="8000" rows="6"></textarea>
+    </label>
+    <label>
+      Source URL
+      <input name="source_url" type="url" maxlength="2000" />
+    </label>
+    <label>
+      Contact email
+      <input name="contact_email" type="email" maxlength="320" autocomplete="email" />
+    </label>
+    <button type="submit">Submit for review</button>
+  </form>
+  <p id="result" role="status"></p>
+</Base>
+<script>
+  const form = document.querySelector("#contribution");
+  const result = document.querySelector("#result");
+  if (form instanceof HTMLFormElement && result instanceof HTMLElement) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const raw = new FormData(form);
+      const payload: Record<string, string> = {};
+      for (const [key, value] of raw.entries()) {
+        if (typeof value === "string" && value.trim() !== "") payload[key] = value.trim();
+      }
+      const response = await fetch("/api/v1/contributions", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const body: unknown = await response.json();
+      result.textContent = "";
+      if (
+        body &&
+        typeof body === "object" &&
+        "data" in body &&
+        body.data &&
+        typeof body.data === "object" &&
+        "id" in body.data &&
+        "status" in body.data
+      ) {
+        const data = body.data as { id: unknown; status: unknown };
+        result.textContent = `DRAFT: copy pending approval. id ${String(data.id)} status ${String(data.status)}`;
+        form.reset();
+        return;
+      }
+      result.textContent = "DRAFT: copy pending approval";
+    });
+  }
+</script>
