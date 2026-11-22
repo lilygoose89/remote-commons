@@ -1,0 +1,53 @@
+---
+import "../styles/global.css";
+import { metaRobots } from "../lib/robots";
+import { ADVICE_LINE, PLUMIA_CREDIT, SITE_ORIGIN } from "../lib/site";
+import DatasetJsonLd from "../components/DatasetJsonLd.astro";
+
+interface Props {
+  title: string;
+  creditPlumia?: boolean;
+  datasetJsonLd?: boolean;
+}
+
+const { title, creditPlumia = false, datasetJsonLd = false } = Astro.props;
+const robots = metaRobots(import.meta.env.PUBLIC_INDEXABLE, Astro.locals.runtime?.env?.INDEXABLE);
+const canonicalPath = Astro.url.pathname === "/" ? "/" : Astro.url.pathname.replace(/\/$/, "");
+const canonical = new URL(canonicalPath, SITE_ORIGIN).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content={robots} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {datasetJsonLd && <DatasetJsonLd />}
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header>
+      <p class="mark"><a href="/">Remote Commons</a></p>
+      <nav aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/index">Index</a>
+        <a href="/whitepaper">Whitepaper</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/about">About</a>
+        <a href="/contribute">Contribute</a>
+        <a href="/api/openapi.json">API</a>
+      </nav>
+    </header>
+    <main id="content">
+      <p class="draft">DRAFT: copy pending approval</p>
+      <slot />
+    </main>
+    <footer>
+      <p>{ADVICE_LINE}</p>
+      {creditPlumia && <p>{PLUMIA_CREDIT}</p>}
+    </footer>
+  </body>
+</html>

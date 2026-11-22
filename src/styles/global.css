@@ -1,0 +1,191 @@
+:root {
+  color-scheme: light;
+  --paper: #f6f4f0;
+  --ink: #1c1917;
+  --muted: #5c564e;
+  --line: #e3dbd1;
+  --accent: #1f3a2e;
+  --banner: #f3ead7;
+  --max: 72rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.55;
+  font-size: 1.05rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  transform: translateY(-150%);
+  background: white;
+  padding: 0.3rem 0.6rem;
+}
+
+.skip:focus {
+  transform: none;
+}
+
+header,
+main,
+footer {
+  width: min(var(--max), calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: baseline;
+  padding: 1.25rem 0 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.mark {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+.mark a {
+  color: inherit;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 0.92rem;
+}
+
+main {
+  padding: 1.5rem 0 3rem;
+}
+
+h1,
+h2 {
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0.2rem 0 1rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin: 2rem 0 0.6rem;
+}
+
+.draft {
+  margin: 0 0 1rem;
+  padding: 0.45rem 0.7rem;
+  background: var(--banner);
+  border-left: 3px solid #8a6a2f;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 0.92rem;
+}
+
+footer {
+  padding: 1rem 0 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+footer p {
+  margin: 0.3rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 0.88rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.4rem 0.55rem;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  font-weight: 650;
+  color: var(--muted);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+form {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 36rem;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.92rem;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #cfc6bb;
+  background: white;
+}
+
+button {
+  width: fit-content;
+  padding: 0.45rem 0.8rem;
+  background: var(--accent);
+  color: white;
+  border: 0;
+  cursor: pointer;
+}
+
+#result {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+
+ul {
+  padding-left: 1.2rem;
+}

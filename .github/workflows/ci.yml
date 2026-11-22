@@ -1,0 +1,56 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Secret scan
+        run: npm run scan-secrets
+      - run: npm run build
+      - name: Apply D1 migrations locally
+        run: npm run db:migrate:local
+        env:
+          CI: "true"
+          WRANGLER_SEND_METRICS: "false"
+      - name: Smoke the local API
+        run: npm run smoke
+        env:
+          CI: "true"
+          WRANGLER_SEND_METRICS: "false"
+
+  # Deploy is not wired. Account and database ids in wrangler.jsonc are
+  # placeholders. Do not deploy, do not create Cloudflare resources, and do
+  # not change DNS from this workflow.
+  # deploy:
+  #   needs: check
+  #   if: github.ref == 'refs/heads/main'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: npm
+  #     - run: npm ci
+  #     - run: npm run build
+  #       env:
+  #         PUBLIC_INDEXABLE: "true"
+  #     # - run: npx wrangler d1 migrations apply remote-commons --remote
+  #     # - run: npx wrangler deploy

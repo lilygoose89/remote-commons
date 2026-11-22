@@ -1,0 +1,33 @@
+{
+  "name": "remote-commons",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Remote Commons: nomad-policy research site. Astro 5 on Cloudflare Workers, D1, read-only JSON API.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "astro build",
+    "typecheck": "astro check",
+    "lint": "biome check .",
+    "test": "vitest run",
+    "db:migrate:local": "wrangler d1 migrations apply remote-commons --local",
+    "scan-secrets": "node scripts/scan-secrets.mjs",
+    "smoke": "node scripts/smoke-api.mjs"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "12.6.13",
+    "astro": "5.18.2",
+    "zod": "3.24.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.9",
+    "@biomejs/biome": "2.6.8",
+    "@types/node": "^22.20.5",
+    "typescript": "5.9.3",
+    "vitest": "3.2.7",
+    "wrangler": "4.59.2"
+  }
+}

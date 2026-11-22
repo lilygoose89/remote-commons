@@ -1,0 +1,14 @@
+---
+import CountriesIndex from "../components/CountriesIndex.astro";
+import NotFound from "../components/NotFound.astro";
+
+/**
+ * `/` is src/pages/index.astro. A file at src/pages/index/index.astro collides
+ * with that route, so the countries index is this dynamic route and only
+ * matches the slug "index".
+ */
+const isIndex = Astro.params.slug === "index";
+if (!isIndex) Astro.response.status = 404;
+---
+
+{isIndex ? <CountriesIndex /> : <NotFound />}
